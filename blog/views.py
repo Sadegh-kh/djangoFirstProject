@@ -12,9 +12,9 @@ def index_page(request):
 def post_list(request):
     posts = Post.published.all()
     context = {
-        "posts": posts
+        "list_of_post": posts
     }
-    return render(request, "post_list.html", context)
+    return render(request, "blog/post_list.html", context)
 
 
 def post_item(request, id):
@@ -25,4 +25,4 @@ def post_item(request, id):
     context = {
         "post": post
     }
-    return render(request, "post_detail.html", context)
+    return render(request, "blog/post_detail.html", context)
