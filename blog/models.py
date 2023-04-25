@@ -16,20 +16,20 @@ class Post(models.Model):
         REJECT = ("RJ", "Reject")
 
     # relation
-    auther = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_posted")
+    auther = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_posted", verbose_name="نویسنده")
     # data fields
-    title = models.CharField(max_length=250)
-    description = models.TextField()
+    title = models.CharField(max_length=250, verbose_name="موضوع")
+    description = models.TextField(verbose_name="توضیحات")
 
-    slug = models.SlugField(max_length=250)
+    slug = models.SlugField(max_length=250, verbose_name="سلاگ")
 
     # date fields
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    publish = models.DateTimeField(default=timezone.now)
+    publish = models.DateTimeField(default=timezone.now, verbose_name="تاریخ انتشار")
 
     # choice field
-    status = models.CharField(max_length=2, choices=Status.choices, default=Status.DRAFT)
+    status = models.CharField(max_length=2, choices=Status.choices, default=Status.DRAFT, verbose_name="وضعیت")
 
     objects = models.Manager()
     published = PublishedManager()
@@ -39,6 +39,8 @@ class Post(models.Model):
         indexes = [
             models.Index(fields=["-publish"])
         ]
+        verbose_name = "پست"
+        verbose_name_plural = "پست ها"
 
     def __str__(self):
         return self.title
