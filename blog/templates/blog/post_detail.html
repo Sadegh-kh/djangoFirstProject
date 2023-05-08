@@ -1,5 +1,5 @@
 {% extends 'parent/base.html' %}
-
+{% load jformat %}
 {% block title %}
     {{ post.title }}
 {% endblock %}
@@ -9,5 +9,5 @@
     <h4>{{ post.title }} (by {{ post.auther }})</h4>
     <p>{{ post.description | linebreaks }}</p>
     <hr>
-    <p>{{ post.publish }}</p>
+    <p>{{ post.publish | jformat:"%Y/%m/%d %H:%M"}}</p>
 {% endblock %}
