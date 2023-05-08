@@ -7,7 +7,7 @@
     <h1>Post List</h1>
     {% for post in list_of_post %}
         <h4>
-            <a href="{% url 'blog:post_item' post.id %}">{{ post }}</a>
+            <a href="{{ post.get_absolute_url }}">{{ post }}</a>
         </h4>
         <p>{{ post.description|truncatewords:4 }}</p>
     {% endfor %}
