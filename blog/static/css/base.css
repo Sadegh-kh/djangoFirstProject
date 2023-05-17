@@ -40,7 +40,18 @@ li::before {
     left: 0;
     background: linear-gradient(to right, var(--c1) var(--stop), var(--c2) var(--stop));
 }
-
+h1 {
+    width: 350px;
+	height: 70px;
+	background-color: #ffffff;
+	color: #721212;
+	text-align: center;
+	border-bottom: 5px solid #721212;
+	border-top: 5px solid #941616;
+	border-radius: 10px;
+	margin: 20px auto;
+	padding: 10px;
+}
 h3 {
     display: flex;
     align-items: baseline;
