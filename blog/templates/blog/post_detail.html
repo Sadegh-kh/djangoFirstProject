@@ -5,9 +5,13 @@
 {% endblock %}
 
 {% block content %}
-    <h2>Post</h2>
-    <h4>{{ post.title }} (by {{ post.auther }})</h4>
-    <p>{{ post.description | linebreaks }}</p>
+    <h1 class="post-detail">{{ post.title }}</h1>
+    <p class="author">author: {{ post.author }}</p>
+    <span class="pub-date">{{ post.publish|jformat:"%Y/%m/%d-%H:%M" }}</span>
+    <div class="des">
+        <p class="des-p">{{ post.description | linebreaks }}</p>
+    </div>
+
     <hr>
-    <p>{{ post.publish | jformat:"%Y/%m/%d %H:%M"}}</p>
+
 {% endblock %}

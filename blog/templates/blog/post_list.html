@@ -4,16 +4,19 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Post List</h1>
-    <ol style="--length: {{ list_of_post.count }}" role="list">
-        {% for post in list_of_post %}
-            <li style="--i: {{ forloop.counter }}">
-                <h3>
-                    <a href="{{ post.get_absolute_url }}">{{ post }}</a>
-                </h3>
-                <p>{{ post.description|truncatewords:4 }}</p>
-            </li>
-        {% endfor %}
-    </ol>
 
+<h1 class="post-list">post list</h1>
+
+<ol style="--length: {{ list_of_post|length }}" role="list">
+    {% for post in list_of_post %}
+        <li style="--i: {{ forloop.counter }}">
+        <h3 class="post-title">
+        <a href="{{post.get_absolute_url}}">{{ post.title }}</a>
+        </h3>
+        <p class="descr"> {{ post.description | truncatewords:4 }}</p>
+        </li>
+    {% endfor %}
+</ol>
+
+    {% include "partials/pagination.html" with page=page_obj%}
 {% endblock %}
