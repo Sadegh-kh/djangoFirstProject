@@ -49,3 +49,13 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("blog:post_item", args=[self.id])
+
+
+class Ticket(models.Model):
+    name = models.CharField(max_length=255, verbose_name="نام")
+    email = models.EmailField(verbose_name="ایمیل")
+
+    # char field instead of integer field because we don't want to calculate
+    phone = models.CharField(max_length=12, verbose_name="شماره موبایل")
+    subject = models.CharField(max_length=255, verbose_name="موضوع")
+    massage = models.TextField(verbose_name="پیام")
