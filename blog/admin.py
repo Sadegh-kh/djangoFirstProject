@@ -15,10 +15,15 @@ admin.AdminSite.index_title = "پنل مدیریت"
 class PostAdmin(admin.ModelAdmin):
     list_display = ["title", "auther", "publish", "status"]
     list_display_links = ['auther', 'title']
-    list_filter = [("publish",JDateFieldListFilter), 'status', 'auther']
+    list_filter = [("publish", JDateFieldListFilter), 'status', 'auther']
     search_fields = ['title', 'description', 'auther']
     list_editable = ['status']
     prepopulated_fields = {'slug': ['auther', 'title']}
     raw_id_fields = ('auther',)
     date_hierarchy = 'publish'
     ordering = ['-publish', 'title']
+
+
+@admin.register(Ticket)
+class TicketAdmin(admin.ModelAdmin):
+    list_display = ["name", "subject", "phone"]
