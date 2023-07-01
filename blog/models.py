@@ -58,4 +58,4 @@ class Ticket(models.Model):
     # char field instead of integer field because we don't want to calculate
     phone = models.CharField(max_length=12, verbose_name="شماره موبایل")
     subject = models.CharField(max_length=255, verbose_name="موضوع")
-    massage = models.TextField(verbose_name="پیام")
+    message = models.TextField(verbose_name="پیام")

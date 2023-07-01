@@ -5,7 +5,37 @@
     <h1>Ticket</h1>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {# method 1 #}
+        {# {{ form.as_p }}#}
+
+        {# method 2 #}
+        {#        {% for field in form %}#}
+        {#            {{ field.label }}#}
+        {#            {{ field }}#}
+        {#            {{ field.errors }}#}
+        {#        {% endfor %}#}
+
+        {# method 3 #}
+        <label for="name">Name: </label>
+        <input type="text" id="name" name="name" required maxlength="255">
+        <br><br>
+        <label for="email">Email: </label>
+        <input type="email" id="email" name="email" maxlength="255">
+        <br><br>
+        <label for="phone">Phone: </label>
+        <input type="text" id="phone" name="phone" required maxlength="12">
+        <br><br>
+        <label for="subject">Subject: </label>
+        <select name="subject" id="subject">
+            <option value="پیشنهادات">پیشنهاد</option>
+            <option value="انتقادات">انتقاد</option>
+            <option value="گزارشات">گزارش</option>
+        </select>
+        <br><br>
+        <label for="message">Message: </label>
+        <textarea name="message" id="message"></textarea>
+
         <input type="submit" value="ثبت تیکت">
+
     </form>
 {% endblock content %}

@@ -19,6 +19,7 @@ def index_page(request):
 #     page_number = request.GET.get('page', 1)
 #     try:
 #         posts = paginator.page(page_number)
+#     # for example we have 4 object , user enter 5 and Paginator rise EmptyPage
 #     except EmptyPage:
 #         posts = paginator.page(paginator.num_pages)
 #     except PageNotAnInteger:
@@ -59,7 +60,7 @@ def ticket(request):
             ticket_obj.email = cd['email']
             ticket_obj.phone = cd['phone']
             ticket_obj.subject = cd['subject']
-            ticket_obj.massage = cd['massage']
+            ticket_obj.message = cd['message']
             ticket_obj.save()
             return redirect("blog:home")
     else:
