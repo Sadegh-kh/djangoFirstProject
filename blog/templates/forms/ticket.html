@@ -17,25 +17,58 @@
 
         {# method 3 #}
         <label for="name">Name: </label>
-        <input type="text" id="name" name="name" required maxlength="255">
+        <input type="text" id="name" name="name" required maxlength="255"
+                {% if form.name %}
+               value="{{ form.name.value }}"
+                {% endif %} >
         <br><br>
         <label for="email">Email: </label>
-        <input type="email" id="email" name="email" maxlength="255">
+        <input type="email" id="email" name="email" maxlength="255"
+                {% if form.email %}
+               value="{{ form.email.value }}"
+                {% endif %}>
         <br><br>
         <label for="phone">Phone: </label>
-        <input type="text" id="phone" name="phone" required maxlength="12">
+        <input type="text" id="phone" name="phone" required maxlength="12"
+                {% if form.phone %}
+               value="{{ form.phone.value }}"
+                {% endif %}>
         <br><br>
         <label for="subject">Subject: </label>
         <select name="subject" id="subject">
-            <option value="پیشنهادات">پیشنهاد</option>
-            <option value="انتقادات">انتقاد</option>
-            <option value="گزارشات">گزارش</option>
+            <option value="پیشنهادات"{% if form.subject.value == "پیشنهادات" %}
+                    selected
+            {% endif %} >پیشنهاد
+            </option>
+            <option value="انتقادات"
+                    {% if form.subject.value == "انتقادات" %}
+                    selected
+                    {% endif %}>انتقاد
+            </option>
+            <option value="گزارشات"
+                    {% if form.subject.value == "گزارشات" %}
+                    selected
+                    {% endif %}>گزارش
+            </option>
         </select>
         <br><br>
         <label for="message">Message: </label>
-        <textarea name="message" id="message"></textarea>
+        <textarea name="message" id="message">
+            {% if form.name %}{{ form.message.value }}{% endif %}
+        </textarea>
 
         <input type="submit" value="ثبت تیکت">
-
+        {% if form.errors %}
+            <p>ارور های زیر رو داری</p>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    {{ field.label }} : {{ error }}
+                    <br><br>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        {% if form.non_field_errors %}
+            {{ form.non_field_errors }}
+        {% endif %}
     </form>
 {% endblock content %}
