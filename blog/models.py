@@ -62,12 +62,13 @@ class Ticket(models.Model):
 
 
 class Comment(models.Model):
+    # post.comments/ post.comments.all() / comment.post
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="comments", verbose_name="پست")
     name = models.CharField(max_length=255, verbose_name="نام")
-    body = models.TextField(verbose_name="پیام")
-    created = jmodels.jDateTimeField(auto_now_add=True)
-    update = jmodels.jDateTimeField(auto_now=True)
-    active = models.BooleanField(default=False)
+    body = models.TextField(verbose_name="متن کامنت")
+    created = jmodels.jDateTimeField(auto_now_add=True, verbose_name="تاریخ ایجاد")
+    update = jmodels.jDateTimeField(auto_now=True, verbose_name="تاریخ ویرایش")
+    active = models.BooleanField(default=False, verbose_name="وضعیت پذیرش")
 
     class Meta:
         ordering = ['created']
