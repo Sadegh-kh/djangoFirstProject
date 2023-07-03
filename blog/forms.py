@@ -1,6 +1,7 @@
 from django import forms
 from .models import Comment
 
+
 class TicketForm(forms.Form):
     SUBJECT_CHOICES = (
         ("پیشنهادات", "پیشنهاد"),
@@ -15,7 +16,7 @@ class TicketForm(forms.Form):
     message = forms.CharField(widget=forms.Textarea)
 
     def clean_phone(self):
-        phone=self.cleaned_data["phone"]
+        phone = self.cleaned_data["phone"]
         if not phone.isnumeric():
             raise forms.ValidationError("شماره تلفن عددی نیست")
         else:
@@ -25,4 +26,11 @@ class TicketForm(forms.Form):
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ['name','body']
+        fields = ['name', 'body']
+
+    def clean_name(self):
+        name=self.cleaned_data['name']
+        if len(name) < 3:
+            raise forms.ValidationError("اسم وارد شده باید بیشتر از ۳ کارکتر باشد")
+        else:
+            return name
