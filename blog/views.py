@@ -4,6 +4,7 @@ from .models import Post, Ticket
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView, DetailView
 from .forms import *
+from django.views.decorators.http import require_POST
 
 
 # Create your views here.
@@ -38,16 +39,38 @@ class PostList(ListView):
     template_name = "blog/post_list.html"
 
 
-# def post_item(request, id):
-#     post = get_object_or_404(Post, id=id, status=Post.Status.PUBLISH)
-#     context = {
-#         "post": post
-#     }
-#     return render(request, "blog/post_detail.html", context)
+def post_item(request, pk):
+    post = get_object_or_404(Post, id=pk, status=Post.Status.PUBLISH)
+    form = CommentForm()
+    comments = post.comments.filter(active=True)
+    context = {
+        "post": post,
+        'form': form,
+        'comments': comments,
+    }
+    return render(request, "blog/post_detail.html", context)
 
-class PostItemDetail(DetailView):
-    template_name = "blog/post_detail.html"
-    model = Post
+
+# class PostItemDetail(DetailView):
+#     template_name = "blog/post_detail.html"
+#     model = Post
+
+
+@require_POST
+def post_comment(request, pk):
+    post = get_object_or_404(Post, id=pk, status=Post.Status.PUBLISH)
+    comment = None
+    form = CommentForm(request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.post = post
+        comment.save()
+    context = {
+        'post': post,
+        'form': form,
+        'comment': comment
+    }
+    return render(request, 'forms/comment.html', context)
 
 
 def ticket(request):
