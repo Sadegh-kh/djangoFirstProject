@@ -13,6 +13,7 @@
     </div>
 
     <hr>
+
     {% with comments.count as comment_count %}
         <p>{{ comment_count }} comment{{ comment_count|pluralize }}</p>
     {% endwith %}
