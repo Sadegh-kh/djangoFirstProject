@@ -5,12 +5,19 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView, DetailView
 from .forms import *
 from django.views.decorators.http import require_POST
+from django.db.models import Avg, Max, Min
 
 
 # Create your views here.
 
 def index_page(request):
-    return render(request, 'blog/index.html')
+    aggregate_post = Post.published.aggregate(Avg("reading_time"), Max("reading_time"), Min("reading_time"))
+    context = {
+        'max_time': aggregate_post['reading_time__max'],
+        'min_time': aggregate_post['reading_time__min'],
+        'avg_time': aggregate_post['reading_time__avg'],
+    }
+    return render(request, 'blog/index.html',context)
 
 
 # func base view

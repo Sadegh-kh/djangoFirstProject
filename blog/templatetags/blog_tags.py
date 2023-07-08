@@ -1,5 +1,6 @@
 from django import template
 from ..models import Post, Comment
+from django.db.models import Count
 
 register = template.Library()
 
@@ -17,6 +18,10 @@ def total_comments():
 @register.simple_tag(name="last_published")
 def last_date():
     return Post.published.last().publish.strftime("%Y/%m/%d-%H:%M")
+
+@register.simple_tag
+def most_comments(count):
+    return Post.published.annotate(comment_count=Count("comments")).order_by("-comment_count")[:count]
 
 
 @register.inclusion_tag("partials/latest_posts_tag.html")
