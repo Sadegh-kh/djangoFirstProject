@@ -1,7 +1,8 @@
 from django import template
 from ..models import Post, Comment
 from django.db.models import Count
-
+from markdown import markdown
+from django.utils.safestring import mark_safe
 register = template.Library()
 
 
@@ -19,6 +20,7 @@ def total_comments():
 def last_date():
     return Post.published.last().publish.strftime("%Y/%m/%d-%H:%M")
 
+
 @register.simple_tag
 def most_comments(count):
     return Post.published.annotate(comment_count=Count("comments")).order_by("-comment_count")[:count]
@@ -31,3 +33,9 @@ def latest_post(count=4):
         "last_posts": last_posts
     }
     return context
+
+
+# filters
+@register.filter("markdown")
+def to_markdown(text):
+    return mark_safe(markdown(text))
