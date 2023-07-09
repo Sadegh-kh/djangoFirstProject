@@ -14,6 +14,12 @@ body {
     margin: 0;
     background-color: whitesmoke;
 }
+.name_ticket{
+height: 30px;
+}
+.comment_body{
+    border-radius: 5px;
+}
 
 .post-list {
     width: 350px;

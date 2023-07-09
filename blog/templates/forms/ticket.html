@@ -6,7 +6,7 @@
     <form method="post">
         {% csrf_token %}
         {# method 1 #}
-        {# {{ form.as_p }}#}
+        {{ form.as_p }}
 
         {# method 2 #}
         {#        {% for field in form %}#}
@@ -16,46 +16,46 @@
         {#        {% endfor %}#}
 
         {# method 3 #}
-        <label for="name">Name: </label>
-        <input type="text" id="name" name="name" required maxlength="255"
-                {% if form.name.value %}
-               value="{{ form.name.value }}"
-                {% endif %} >
-        <br><br>
-        <label for="email">Email: </label>
-        <input type="email" id="email" name="email" maxlength="255"
-                {% if form.email.value %}
-               value="{{ form.email.value }}"
-                {% endif %}>
-        <br><br>
-        <label for="phone">Phone: </label>
-        <input type="text" id="phone" name="phone" required maxlength="12"
-                {% if form.phone.value %}
-               value="{{ form.phone.value }}"
-                {% endif %}>
-        <br><br>
-        <label for="subject">Subject: </label>
-        <select name="subject" id="subject">
-            <option value="پیشنهادات"{% if form.subject.value == "پیشنهادات" %}
-                    selected
-            {% endif %} >پیشنهاد
-            </option>
-            <option value="انتقادات"
-                    {% if form.subject.value == "انتقادات" %}
-                    selected
-                    {% endif %}>انتقاد
-            </option>
-            <option value="گزارشات"
-                    {% if form.subject.value == "گزارشات" %}
-                    selected
-                    {% endif %}>گزارش
-            </option>
-        </select>
-        <br><br>
-        <label for="message">Message: </label>
-        <textarea name="message" id="message">
-            {% if form.message.value %}{{ form.message.value }}{% endif %}
-        </textarea>
+{#        <label for="name">Name: </label>#}
+{#        <input type="text" id="name" name="name" required maxlength="255"#}
+{#                {% if form.name.value %}#}
+{#               value="{{ form.name.value }}"#}
+{#                {% endif %} >#}
+{#        <br><br>#}
+{#        <label for="email">Email: </label>#}
+{#        <input type="email" id="email" name="email" maxlength="255"#}
+{#                {% if form.email.value %}#}
+{#               value="{{ form.email.value }}"#}
+{#                {% endif %}>#}
+{#        <br><br>#}
+{#        <label for="phone">Phone: </label>#}
+{#        <input type="text" id="phone" name="phone" required maxlength="12"#}
+{#                {% if form.phone.value %}#}
+{#               value="{{ form.phone.value }}"#}
+{#                {% endif %}>#}
+{#        <br><br>#}
+{#        <label for="subject">Subject: </label>#}
+{#        <select name="subject" id="subject">#}
+{#            <option value="پیشنهادات"{% if form.subject.value == "پیشنهادات" %}#}
+{#                    selected#}
+{#            {% endif %} >پیشنهاد#}
+{#            </option>#}
+{#            <option value="انتقادات"#}
+{#                    {% if form.subject.value == "انتقادات" %}#}
+{#                    selected#}
+{#                    {% endif %}>انتقاد#}
+{#            </option>#}
+{#            <option value="گزارشات"#}
+{#                    {% if form.subject.value == "گزارشات" %}#}
+{#                    selected#}
+{#                    {% endif %}>گزارش#}
+{#            </option>#}
+{#        </select>#}
+{#        <br><br>#}
+{#        <label for="message">Message: </label>#}
+{#        <textarea name="message" id="message">#}
+{#            {% if form.message.value %}{{ form.message.value }}{% endif %}#}
+{#        </textarea>#}
 
         <input type="submit" value="ثبت تیکت">
         {% if form.errors %}

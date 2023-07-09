@@ -9,7 +9,8 @@ class TicketForm(forms.Form):
         ("گزارشات", "گزارش"),
     )
     # label
-    name = forms.CharField(max_length=255, required=True)
+    name = forms.CharField(max_length=255, required=True,widget=forms.TextInput(attrs={"class":"name_ticket",
+                                                                                       "placeholder":"نام"}))
     email = forms.EmailField()
     phone = forms.CharField(max_length=12, required=True)
     subject = forms.ChoiceField(choices=SUBJECT_CHOICES)
@@ -27,6 +28,7 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ['name', 'body']
+        widgets = {'body': forms.Textarea(attrs={"class":"comment_body"})}
 
     def clean_name(self):
         name=self.cleaned_data['name']
