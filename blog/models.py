@@ -62,6 +62,8 @@ class Ticket(models.Model):
     subject = models.CharField(max_length=255, verbose_name="موضوع")
     message = models.TextField(verbose_name="پیام")
 
+    send_time = models.DateTimeField(default=timezone.now, verbose_name="تاریخ ارسال",null=True)
+
 
 class Comment(models.Model):
     # post.comments/ post.comments.all() / comment.post

@@ -26,7 +26,7 @@ class PostAdmin(admin.ModelAdmin):
 
 @admin.register(Ticket)
 class TicketAdmin(admin.ModelAdmin):
-    list_display = ["name", "subject", "phone"]
+    list_display = ["name", "subject", "phone", 'send_time']
 
 
 @admin.register(Comment)
