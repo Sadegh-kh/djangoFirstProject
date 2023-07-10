@@ -19,4 +19,8 @@
     <p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a> with {{ post.comment_count }} comment</p>
     {% endfor %}
 
+    <br><br>
+
+    <a href="{% url "blog:create_post" %}">create post</a>
+
 {% endblock %}

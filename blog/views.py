@@ -6,6 +6,7 @@ from django.views.generic import ListView, DetailView
 from .forms import *
 from django.views.decorators.http import require_POST
 from django.db.models import Avg, Max, Min
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -17,7 +18,7 @@ def index_page(request):
         'min_time': aggregate_post['reading_time__min'],
         'avg_time': aggregate_post['reading_time__avg'],
     }
-    return render(request, 'blog/index.html',context)
+    return render(request, 'blog/index.html', context)
 
 
 # func base view
@@ -96,3 +97,24 @@ def ticket(request):
     else:
         form = TicketForm()
     return render(request, "forms/ticket.html", {'form': form})
+
+
+def create_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        user_id = request.user.id
+        get_user = get_object_or_404(User, id=user_id)
+        if form.is_valid():
+            post_form = form.save(commit=False)
+            post_form.auther = get_user
+            post_form.slug = f"{user_id}-{form.cleaned_data['title']}"
+            post_form.save()
+            return redirect("blog:post_list")
+
+    else:
+        form = PostForm()
+    context = {
+        "form": form
+    }
+
+    return render(request, "forms/post.html", context)
