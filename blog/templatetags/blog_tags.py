@@ -3,6 +3,7 @@ from ..models import Post, Comment
 from django.db.models import Count
 from markdown import markdown
 from django.utils.safestring import mark_safe
+
 register = template.Library()
 
 
@@ -39,3 +40,13 @@ def latest_post(count=4):
 @register.filter("markdown")
 def to_markdown(text):
     return mark_safe(markdown(text))
+
+
+@register.filter
+def censorship(text: str):
+    blasphemes = ['fuck', 'عوضی', 'گوه', 'کثافت', 'bitch']
+    for i in blasphemes:
+        if text.find(i):
+            text=text.replace(i, "*****")
+
+    return mark_safe(text)
