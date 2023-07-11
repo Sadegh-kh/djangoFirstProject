@@ -5,18 +5,18 @@
 {% endblock %}
 {% block content %}
     <h2>آمار</h2>
-    <p> تعداد پست ها :  {% total_posts %} </p>
-    <p>  تعداد کامنت ها : {% all_comment %} </p>
+    <p> تعداد پست ها : {% total_posts %} </p>
+    <p> تعداد کامنت ها : {% all_comment %} </p>
     <p> تاریخ اخرین پست : {% last_published %} </p>
     <p> بیشترین زمان مطالعه هر پست : {{ max_time }} </p>
-    <p> کمترین زمان مطالعه هر پست : {{min_time}} </p>
-    <p> میانگین زمان مطالعه هر پست : {{avg_time}} </p>
+    <p> کمترین زمان مطالعه هر پست : {{ min_time }} </p>
+    <p> میانگین زمان مطالعه هر پست : {{ avg_time }} </p>
     {% latest_post 3 %}
 
     <h2>بیشترین کامنت برای هر پست </h2>
     {% most_comments 3 as mos_com %}
     {% for post in mos_com %}
-    <p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a> with {{ post.comment_count }} comment</p>
+        <p><a href="{{ post.get_absolute_url }}">{{ post.title }}</a> with {{ post.comment_count }} comment</p>
     {% endfor %}
 
     <br><br>
