@@ -1,0 +1,22 @@
+{% extends 'parent/base.html' %}
+{% load blog_tags %}
+{% block title %}
+    search post
+{% endblock %}
+
+{% block content %}
+    {% if query %}
+        {% with results.count as result_count %}
+            <p style="margin: 0 auto;width: max-content">search {{ query }} with {{ result_count }}
+                result{{ result_count|pluralize }} </p>
+        {% endwith %}
+        <br><br>
+        {% for post in results %}
+            <a href="{{ post.get_absolute_url }}"> {{ post.title }}</a>
+            <p>{{ post.description|markdown|truncatewords:8 }}</p>
+        {% empty %}
+            <p style="margin: 0 auto;width: max-content">!هیچ نتیحه ای پیدا نشد</p>
+        {% endfor %}
+    {% endif %}
+
+{% endblock %}

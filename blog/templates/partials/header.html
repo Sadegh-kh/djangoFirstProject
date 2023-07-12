@@ -1,1 +1,5 @@
-<p>header</p>
+<form style="margin: 10px auto;width: max-content" method="get" action="{% url 'blog:post_search' %}">
+    {% csrf_token %}
+    <input type="text" name="query" placeholder="جستوجو..." required>
+    <input type="submit" value="جستوجو">
+</form>

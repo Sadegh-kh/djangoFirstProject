@@ -65,3 +65,7 @@ class PostForm(forms.ModelForm):
             raise forms.ValidationError("باید زمان خواندن بیشتر از ۰ باشد ")
         else:
             return reading_time
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField()
