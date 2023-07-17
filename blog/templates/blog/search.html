@@ -13,7 +13,7 @@
         <br><br>
         {% for post in results %}
             <a href="{{ post.get_absolute_url }}"> {{ post.title }}</a>
-            <p>{{ post.description|markdown|truncatewords:8 }}</p>
+            <p>{{ post.description|markdown|truncatewords:8|censorship }}</p>
         {% empty %}
             <p style="margin: 0 auto;width: max-content">!هیچ نتیحه ای پیدا نشد</p>
         {% endfor %}
