@@ -7,6 +7,7 @@ from .forms import *
 from django.views.decorators.http import require_POST
 from django.db.models import Avg, Max, Min
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 
 # Create your views here.
@@ -127,8 +128,7 @@ def post_search(request):
         form = SearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data['query']
-            results = Post.published.filter(title__icontains=query) | Post.published.filter(
-                description__icontains=query)
+            results = Post.published.filter(Q(title__icontains=query) | Q(description__icontains=query))
 
     context = {
         'query': query,
