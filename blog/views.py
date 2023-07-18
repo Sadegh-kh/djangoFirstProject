@@ -8,7 +8,7 @@ from django.views.decorators.http import require_POST
 from django.db.models import Avg, Max, Min
 from django.contrib.auth.models import User
 from django.db.models import Q
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity
 
 
 # Create your views here.
@@ -129,11 +129,21 @@ def post_search(request):
         form = SearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data['query']
-            search_query = SearchQuery(query)
-            search_vector = SearchVector('title', weight="A") + SearchVector('description', weight="B")
-            rank = SearchRank(search_vector, search_query, weights=[0.1, 0.3, 0.6, 0.9])
-            results = Post.published.annotate(search=search_vector, rank=rank) \
-                .filter(rank__gte=0.4).order_by('-rank')
+            # search with search query and search vector and search rank
+            # search_query = SearchQuery(query)
+            # search_vector = SearchVector('title', weight="A") + SearchVector('description', weight="B")
+            # rank = SearchRank(search_vector, search_query, weights=[0.1, 0.3, 0.6, 0.9])
+            # results = Post.published.annotate(search=search_vector, rank=rank) \
+            #     .filter(rank__gte=0.4).order_by('-rank')
+
+            # search with search trigram similarity
+            results1 = Post.published.annotate(
+                similar=TrigramSimilarity('title',query)).filter(similar__gt=0.1)
+
+            results2 = Post.published.annotate(
+                similar=TrigramSimilarity('description',query)).filter(similar__gt=0.02)
+
+            results = (results1 | results2).order_by('-similar')
 
     context = {
         'query': query,
