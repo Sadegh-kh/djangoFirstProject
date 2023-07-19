@@ -5,18 +5,24 @@
 
 {% block content %}
 
-<h1 class="post-list">post list</h1>
+    <h1 class="post-list">post list</h1>
 
-<ol style="--length: {{ list_of_post|length }}" role="list">
-    {% for post in list_of_post %}
-        <li style="--i: {{ forloop.counter }}">
-        <h3 class="post-title">
-        <a href="{{post.get_absolute_url}}">{{ post.title }}</a>
-        </h3>
-        <p class="descr"> {{ post.description | truncatewords:4 }}</p>
-        </li>
-    {% endfor %}
-</ol>
+    <ol style="--length: {{ list_of_post|length }}" role="list">
+        {% for post in list_of_post %}
+            <li style="--i: {{ forloop.counter }}">
+                <h3 class="post-title">
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </h3>
+                <p class="descr"> {{ post.description | truncatewords:4 }}</p>
+            </li>
 
-    {% include "partials/pagination.html" with page=page_obj%}
+            {% if post.images.first.image_file %}
+                <img src="{{ post.images.first.image_file.url }}" alt="{{ post.images.first.title }}" width="300px"
+                     height="250px">
+            {% endif %}
+
+        {% endfor %}
+    </ol>
+
+    {% include "partials/pagination.html" with page=page_obj %}
 {% endblock %}

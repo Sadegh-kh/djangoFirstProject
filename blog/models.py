@@ -88,7 +88,7 @@ class Comment(models.Model):
 
 class Image(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="images", verbose_name='پست')
-    image = models.ImageField(verbose_name='عکس', upload_to='post_images/')
+    image_file = models.ImageField(verbose_name='عکس', upload_to='post_images/%Y/%m')
     title = models.CharField(verbose_name='موضوع', max_length=255, null=True, blank=True)
     description = models.TextField(verbose_name="توضیحات", null=True, blank=True)
     created = jmodels.jDateTimeField(auto_now_add=True)
@@ -101,3 +101,5 @@ class Image(models.Model):
         verbose_name = 'تصویر'
         verbose_name_plural = 'تصاویر'
 
+    def __str__(self):
+        return self.title if self.title else "none"
