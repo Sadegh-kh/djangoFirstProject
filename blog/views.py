@@ -8,7 +8,7 @@ from django.views.decorators.http import require_POST
 from django.db.models import Avg, Max, Min
 from django.contrib.auth.models import User
 from django.db.models import Q
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity
+from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity, SearchHeadline
 
 
 # Create your views here.
@@ -138,12 +138,13 @@ def post_search(request):
 
             # search with search trigram similarity
             results1 = Post.published.annotate(
-                similar=TrigramSimilarity('title',query)).filter(similar__gt=0.1)
+                similar=TrigramSimilarity('title', query)).filter(similar__gt=0.1)
 
             results2 = Post.published.annotate(
-                similar=TrigramSimilarity('description',query)).filter(similar__gt=0.02)
+                similar=TrigramSimilarity('description', query)).filter(similar__gt=0.02)
 
-            results = (results1 | results2).order_by('-similar')
+            results = (results1 | results2).order_by('-similar').annotate(
+                headline=SearchHeadline("description", query))
 
     context = {
         'query': query,
