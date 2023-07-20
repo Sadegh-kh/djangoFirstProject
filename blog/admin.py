@@ -10,6 +10,17 @@ admin.AdminSite.site_title = "جنگو"
 admin.AdminSite.index_title = "پنل مدیریت"
 
 
+# Inline Admin
+class ImageInline(admin.TabularInline):
+    model = Image
+    extra = 1
+
+
+class CommentInline(admin.StackedInline):
+    model = Comment
+    extra = 0
+
+
 # Register your models here.
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
@@ -22,6 +33,7 @@ class PostAdmin(admin.ModelAdmin):
     raw_id_fields = ('auther',)
     date_hierarchy = 'publish'
     ordering = ['-publish', 'title']
+    inlines = [ImageInline, CommentInline]
 
 
 @admin.register(Ticket)
