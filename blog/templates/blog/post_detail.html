@@ -13,7 +13,7 @@
         <p class="des-p">{{ post.description | markdown |censorship }}</p>
     </div>
     {% for image in post.images.all %}
-        <img src="{{ image.image_file.url }}" alt="{{ image.title }}" width="250" height="300">
+        <img src="{{ image.image_file.url }}" alt="{{ image.title }}">
     {% endfor %}
 
     <hr>
