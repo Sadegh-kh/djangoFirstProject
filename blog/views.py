@@ -137,13 +137,15 @@ def post_search(request):
             #     .filter(rank__gte=0.4).order_by('-rank')
 
             # search with search trigram similarity
-            results1 = Post.published.annotate(
+            result1 = Post.published.annotate(
                 similar=TrigramSimilarity('title', query)).filter(similar__gt=0.1)
 
-            results2 = Post.published.annotate(
-                similar=TrigramSimilarity('description', query)).filter(similar__gt=0.02)
+            result2 = Post.published.annotate(
+                similar=TrigramSimilarity('description', query)).filter(similar__gt=0.1)
 
-            results = (results1 | results2).order_by('-similar').annotate(
+            result3 = Post.published.annotate(
+                similar=TrigramSimilarity('images__description', query)).filter(similar__gt=0.05)
+            results = (result1 | result2 | result3).order_by('-similar').annotate(
                 headline=SearchHeadline("description", query))
 
     context = {
