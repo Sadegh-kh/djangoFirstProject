@@ -110,7 +110,8 @@ class Image(models.Model):
         verbose_name_plural = 'تصاویر'
 
     def __str__(self):
-        return self.title if self.title else "none"
+        image_name = self.image_file.name.split("/")[-1]
+        return self.title if self.title else image_name
 
 
 @receiver(post_delete, sender=Image)
