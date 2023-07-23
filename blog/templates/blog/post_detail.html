@@ -6,16 +6,23 @@
 {% endblock %}
 
 {% block content %}
-    <h1 class="post-detail">{{ post.title }}</h1>
-    <p class="author">author: {{ post.author }}</p>
-    <span class="pub-date">{{ post.publish|jformat:"%Y/%m/%d-%H:%M" }}</span>
-    <div class="des">
-        <p class="des-p">{{ post.description | markdown |censorship }}</p>
-    </div>
-    {% for image in post.images.all %}
-        <img src="{{ image.image_file.url }}" alt="{{ image.title }}">
-    {% endfor %}
+    {% with post.images.all as post_images %}
+        <h1 class="post-detail">{{ post.title }}</h1>
 
+        {% images post_images 0 2 %}
+
+        <p class="author">author: {{ post.author }}</p>
+        <span class="pub-date">{{ post.publish|jformat:"%Y/%m/%d-%H:%M" }}</span>
+        <div class="des">
+            <p class="des-p">{{ post.description | markdown |censorship }}</p>
+
+            {% images post_images 2 4 %}
+
+        </div>
+
+        {% images post_images 4 5 %}
+
+    {% endwith %}
     <hr>
 
     {% with comments.count as comment_count %}
@@ -28,7 +35,6 @@
     {% empty %}
         <p>کامنتی برای این پست ثبت نشده است</p>
     {% endfor %}
-
     {% include 'forms/comment.html' %}
 
 {% endblock %}

@@ -47,6 +47,20 @@ def censorship(text: str):
     blasphemes = ['fuck', 'عوضی', 'گوه', 'کثافت', 'bitch']
     for i in blasphemes:
         if text.find(i):
-            text=text.replace(i, "*****")
+            text = text.replace(i, "*****")
 
     return mark_safe(text)
+
+
+@register.inclusion_tag('partials/post_images.html', name='images')
+def get_url_description_images(images: list, start_with, end_with):
+    images = images[start_with:end_with]
+    urls = []
+    description = []
+    for i in images:
+        urls.append(i.image_file.url)
+        description.append(i.description)
+    context = {
+        'url_description_images': zip(urls, description)
+    }
+    return context
