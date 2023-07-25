@@ -39,32 +39,35 @@ class CommentForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
+    image1 = forms.ImageField(label="تصویر اول")
+    image2 = forms.ImageField(label="تصویر دوم")
+
     class Meta:
         model = Post
         fields = ['title', 'description', 'reading_time']
 
-    def clean_title(self):
-        title = self.cleaned_data['title']
-        if len(title) < 1:
-            raise forms.ValidationError("باید موضوع بیشتر از ۱ کارکتر باشه ")
-        elif len(title) > 250:
-            raise forms.ValidationError("باید موضوع کمتر از ۲۵۰ کارکتر باشه")
-        else:
-            return title
+        def clean_title(self):
+            title = self.cleaned_data['title']
+            if len(title) < 1:
+                raise forms.ValidationError("باید موضوع بیشتر از ۱ کارکتر باشه ")
+            elif len(title) > 250:
+                raise forms.ValidationError("باید موضوع کمتر از ۲۵۰ کارکتر باشه")
+            else:
+                return title
 
-    def clean_description(self):
-        description = self.cleaned_data['description']
-        if len(description) < 5:
-            raise forms.ValidationError("باید موضوع بیشتر از ۵ کارکتر باشه ")
-        else:
-            return description
+        def clean_description(self):
+            description = self.cleaned_data['description']
+            if len(description) < 5:
+                raise forms.ValidationError("باید موضوع بیشتر از ۵ کارکتر باشه ")
+            else:
+                return description
 
-    def clean_reading_time(self):
-        reading_time = self.cleaned_data['reading_time']
-        if reading_time <= 0:
-            raise forms.ValidationError("باید زمان خواندن بیشتر از ۰ باشد ")
-        else:
-            return reading_time
+        def clean_reading_time(self):
+            reading_time = self.cleaned_data['reading_time']
+            if reading_time <= 0:
+                raise forms.ValidationError("باید زمان خواندن بیشتر از ۰ باشد ")
+            else:
+                return reading_time
 
 
 class SearchForm(forms.Form):

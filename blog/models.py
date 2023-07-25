@@ -6,6 +6,7 @@ from django.urls import reverse
 from django_resized import ResizedImageField
 from django.db.models.signals import post_delete, pre_save
 from django.dispatch.dispatcher import receiver
+from django.template.defaultfilters import slugify
 
 
 class PublishedManager(models.Manager):
@@ -54,6 +55,11 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("blog:post_item", args=[self.id])
+
+    def save(self, *args, **kwargs):
+        # method 1 for autofill slug field
+        self.slug = slugify(self.title + " " + str(self.auther.id))
+        super().save(*args, **kwargs)
 
 
 class Ticket(models.Model):

@@ -11,7 +11,7 @@
 
         {% images post_images 0 2 %}
 
-        <p class="author">author: {{ post.auther }}</p>
+        <p class="author"> نویسنده : {{ post.auther }}</p>
         <span class="pub-date">{{ post.publish|jformat:"%Y/%m/%d-%H:%M" }}</span>
         <div class="des">
             <p class="des-p">{{ post.description | markdown |censorship }}</p>

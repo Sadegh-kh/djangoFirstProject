@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
-from .models import Post, Ticket
+from .models import Post, Ticket, Image
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView, DetailView
 from .forms import *
@@ -103,15 +103,21 @@ def ticket(request):
 
 def create_post(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
-        user_id = request.user.id
-        get_user = get_object_or_404(User, id=user_id)
+        form = PostForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             post_form = form.save(commit=False)
-            post_form.auther = get_user
-            post_form.slug = f"{user_id}-{form.cleaned_data['title']}"
+            post_form.auther = request.user
             post_form.save()
-            return redirect("blog:post_list")
+
+            # method 2  for autofill slug field
+            # post_form.slug = f"{user_id}-{form.cleaned_data['title']}"
+
+            Image.objects.create(image_file=form.cleaned_data['image1'], description=form.cleaned_data['description'],
+                                 title=form.cleaned_data['title'], post=post_form)
+            Image.objects.create(image_file=form.cleaned_data['image2'], description=form.cleaned_data['description'],
+                                 title=form.cleaned_data['title'], post=post_form)
+
+            return redirect("blog:profile")
 
     else:
         form = PostForm()
