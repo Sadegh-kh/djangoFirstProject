@@ -128,6 +128,17 @@ def create_post(request):
     return render(request, "forms/post.html", context)
 
 
+def delete_post(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    if request.method == "POST":
+        post.delete()
+        return redirect("blog:profile")
+    context = {
+        'post': post
+    }
+    return render(request, 'forms/delete-post.html', context)
+
+
 def post_search(request):
     query = None
     results = []

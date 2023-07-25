@@ -61,6 +61,14 @@ class Post(models.Model):
         self.slug = slugify(self.title + " " + str(self.auther.id))
         super().save(*args, **kwargs)
 
+    def delete(self, *args, **kwargs):
+        images = self.images.all()
+        for image in images:
+            # storage is django backend storage (media/) and path is exact location of file
+            storage, path = image.image_file.storage, image.image_file.path
+            storage.delete(path)
+        super().delete(*args, **kwargs)
+
 
 class Ticket(models.Model):
     name = models.CharField(max_length=255, verbose_name="نام")
@@ -119,25 +127,31 @@ class Image(models.Model):
         image_name = self.image_file.name.split("/")[-1]
         return self.title if self.title else image_name
 
+    def delete(self, *args, **kwargs):
+        image = self.image_file
+        storage, path = image.storage, image.path
+        storage.delete(path)
+        super().delete(*args, **kwargs)
 
-@receiver(post_delete, sender=Image)
-def delete_image(sender, instance, **kwargs):
-    """ delete old image from media root when deleted database """
-    instance.image_file.delete(save=False)
 
+# method 1 for delete image from media root
+# @receiver(post_delete, sender=Image)
+# def delete_image(sender, instance, **kwargs):
+#     """ delete old image from media root when deleted database """
+#     instance.image_file.delete(save=False)
+#
 
 @receiver(pre_save, sender=Image)
 def pre_save_image(sender, instance, *args, **kwargs):
     """ instance old image file will delete from os """
     try:
         old_img = instance.__class__.objects.get(id=instance.id).image_file.path
+        storage = instance.image_file.storage
         try:
             new_img = instance.image_file.path
         except:
             new_img = None
-        if new_img != old_img:
-            from os import path, remove
-            if path.exists(old_img):
-                remove(old_img)
+        if new_img != old_img and storage.exists(old_img):
+            storage.delete(old_img)
     except:
         pass
