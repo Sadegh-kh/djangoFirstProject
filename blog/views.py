@@ -141,28 +141,37 @@ def delete_post(request, pk):
 def edit_post(request, pk):
     post = get_object_or_404(Post, id=pk)
     images = post.images.all()
+    print(images)
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
-            Image.objects.create(description=form.cleaned_data['description'],
-                                 title=form.cleaned_data['title'],
-                                 post=post, image_file=form.cleaned_data['image1'])
-            Image.objects.create(description=form.cleaned_data['description'],
-                                 title=form.cleaned_data['title'],
-                                 post=post, image_file=form.cleaned_data['image2'])
+            if form.cleaned_data['image1']:
+                Image.objects.create(description=form.cleaned_data['description'],
+                                     title=form.cleaned_data['title'],
+                                     post=post, image_file=form.cleaned_data['image1'])
+            elif form.cleaned_data['image2']:
+                Image.objects.create(description=form.cleaned_data['description'],
+                                     title=form.cleaned_data['title'],
+                                     post=post, image_file=form.cleaned_data['image2'])
+
         if images_count := images.count() > 0:
             for i in range(1, images_count + 1):
-                image_id = request.POST[f'image-id-{i}']
-                new_image = request.FILES[f'image-{i}']
+                image_id = request.POST.get(f'image-id-{i}')
+                new_image = request.FILES.get(f'image - {i}')
                 try:
                     image = Image.objects.get(id=image_id)
                     image.image_file = new_image
                     image.save()
                 except:
-                    Image.objects.create(description=form.cleaned_data['description'],
-                                         title=form.cleaned_data['title'],
-                                         post=post, image_file=new_image)
+                    if new_image:
+                        Image.objects.create(description=form.cleaned_data['description'],
+                                             title=form.cleaned_data['title'],
+                                             post=post, image_file=new_image)
+                    else:
+                        Image.objects.create(description=form.cleaned_data['description'],
+                                             title=form.cleaned_data['title'],
+                                             post=post, image_file=Image.objects.get(id=image_id))
 
             return redirect('blog:profile')
     else:
@@ -173,6 +182,13 @@ def edit_post(request, pk):
         'form': form
     }
     return render(request, "forms/post.html", context)
+
+
+def delete_image(request, pk):
+    image = get_object_or_404(Image, id=pk)
+    post_id = image.post.id
+    image.delete()
+    return redirect('blog:edit_post', pk=post_id)
 
 
 def post_search(request):

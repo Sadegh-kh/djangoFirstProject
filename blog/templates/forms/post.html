@@ -19,10 +19,8 @@
             تغییر:
             <input type="file" name="image-{{ forloop.counter }}" accept="image/*">
             <input type="hidden" value="{{ image.id }}" name="image-id-{{ forloop.counter }}">
+            <a href="{% url 'blog:delete_image' image.id %}">حذف</a>
             <br><br>
-        {% empty %}
-            <input type="file" name="image-1" accept="image/*">
-            <input type="hidden" value="" name="image-id-1">
         {% endfor %}
         <br><br>
 

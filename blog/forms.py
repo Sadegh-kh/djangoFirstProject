@@ -39,8 +39,8 @@ class CommentForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
-    image1 = forms.ImageField(label="تصویر اول")
-    image2 = forms.ImageField(label="تصویر دوم")
+    image1 = forms.ImageField(label="تصویر اول",required=False)
+    image2 = forms.ImageField(label="تصویر دوم",required=False)
 
     class Meta:
         model = Post
