@@ -116,7 +116,6 @@ def create_post(request):
                                  title=form.cleaned_data['title'], post=post_form)
             Image.objects.create(image_file=form.cleaned_data['image2'], description=form.cleaned_data['description'],
                                  title=form.cleaned_data['title'], post=post_form)
-
             return redirect("blog:profile")
 
     else:
@@ -137,6 +136,43 @@ def delete_post(request, pk):
         'post': post
     }
     return render(request, 'forms/delete-post.html', context)
+
+
+def edit_post(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    images = post.images.all()
+    if request.method == "POST":
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            Image.objects.create(description=form.cleaned_data['description'],
+                                 title=form.cleaned_data['title'],
+                                 post=post, image_file=form.cleaned_data['image1'])
+            Image.objects.create(description=form.cleaned_data['description'],
+                                 title=form.cleaned_data['title'],
+                                 post=post, image_file=form.cleaned_data['image2'])
+        if images_count := images.count() > 0:
+            for i in range(1, images_count + 1):
+                image_id = request.POST[f'image-id-{i}']
+                new_image = request.FILES[f'image-{i}']
+                try:
+                    image = Image.objects.get(id=image_id)
+                    image.image_file = new_image
+                    image.save()
+                except:
+                    Image.objects.create(description=form.cleaned_data['description'],
+                                         title=form.cleaned_data['title'],
+                                         post=post, image_file=new_image)
+
+            return redirect('blog:profile')
+    else:
+        form = PostForm(instance=post)
+    context = {
+        'post': post,
+        'images': images,
+        'form': form
+    }
+    return render(request, "forms/post.html", context)
 
 
 def post_search(request):

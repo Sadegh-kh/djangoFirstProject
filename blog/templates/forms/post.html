@@ -5,9 +5,27 @@
 
 {% block content %}
     <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <input type="submit">
+        <br><br>
+
+        {#  if images post exist showing them below  {#}
+        {% for image in images %}
+            <a href="{{ image.image_file.url }}">{{ image.image_file.name }}</a>
+            <br>
+            تغییر:
+            <input type="file" name="image-{{ forloop.counter }}" accept="image/*">
+            <input type="hidden" value="{{ image.id }}" name="image-id-{{ forloop.counter }}">
+            <br><br>
+        {% empty %}
+            <input type="file" name="image-1" accept="image/*">
+            <input type="hidden" value="" name="image-id-1">
+        {% endfor %}
+        <br><br>
+
     </form>
 
 {% endblock %}
