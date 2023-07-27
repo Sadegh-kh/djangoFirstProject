@@ -5,24 +5,39 @@
 
 {% block content %}
     <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-
-        {{ form.as_p }}
-
-        <input type="submit">
-        <br><br>
-
-        {#  if images post exist showing them below  {#}
-        {% for image in images %}
-            <a href="{{ image.image_file.url }}">{{ image.image_file.name }}</a>
-            <br>
-            تغییر:
-            <input type="file" name="image-{{ forloop.counter }}" accept="image/*">
-            <input type="hidden" value="{{ image.id }}" name="image-id-{{ forloop.counter }}">
-            <a href="{% url 'blog:delete_image' image.id %}">حذف</a>
+        {# for edit post #}
+        {% if  post %}
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.name == 'image_1' %}
+                    {# if images post exist showing them below  #}
+                    {% for image in images %}
+                        <a href="{{ image.image_file.url }}">{{ image.image_file.name }}</a>
+                        <br>
+                        تغییر:
+                        <input type="file" name="image_{{ image.id }}" accept="image/*">
+                        <a href="{% url 'blog:delete_image' image.id %}">حذف</a>
+                        <br><br>
+                    {% empty %}
+                        {{ field }}
+                    {% endfor %}
+                {% else %}
+                    <p>{{ field }}</p>
+                {% endif %}
+            {% endfor %}
+            <input type="submit">
             <br><br>
-        {% endfor %}
-        <br><br>
+
+        {% else %}
+            {# for create post #}
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <input type="submit">
+            <br><br>
+        {% endif %}
+
 
     </form>
 

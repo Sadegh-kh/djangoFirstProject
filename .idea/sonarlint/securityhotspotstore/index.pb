@@ -7,3 +7,7 @@ T
 $blog/templates/blog/post_detail.html,a\4\a42c9bd94aec628bf5e4f4ab0bd3c3bcc3bbbe97
 U
 %blog/templates/forms/delete-post.html,8\5\85f143af277ce8dbe1098c0912114e02f455048f
+P
+ blog/templates/blog/profile.html,5\c\5cdf6750af77ae1aede1321e30e96803137a712a
+<
+blog/urls.py,f\6\f6b33af54aee9a28118c42532a95bf2744e8df7d
