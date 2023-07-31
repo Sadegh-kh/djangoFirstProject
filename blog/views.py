@@ -3,12 +3,12 @@ from django.http import HttpResponse, Http404
 from .models import Post, Ticket, Image
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.views.generic import ListView, DetailView
-from .forms import *
+from . import forms
 from django.views.decorators.http import require_POST
 from django.db.models import Avg, Max, Min
-from django.contrib.auth.models import User
 from django.db.models import Q
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity, SearchHeadline
+from django.contrib.auth import authenticate, login
 
 
 # Create your views here.
@@ -51,7 +51,7 @@ class PostList(ListView):
 
 def post_item(request, pk):
     post = get_object_or_404(Post, id=pk, status=Post.Status.PUBLISH)
-    form = CommentForm()
+    form = forms.CommentForm()
     comments = post.comments.filter(active=True)
     context = {
         "post": post,
@@ -70,7 +70,7 @@ def post_item(request, pk):
 def post_comment(request, pk):
     post = get_object_or_404(Post, id=pk, status=Post.Status.PUBLISH)
     comment = None
-    form = CommentForm(request.POST)
+    form = forms.CommentForm(request.POST)
     if form.is_valid():
         comment = form.save(commit=False)
         comment.post = post
@@ -85,7 +85,7 @@ def post_comment(request, pk):
 
 def ticket(request):
     if request.method == "POST":
-        form = TicketForm(request.POST)
+        form = forms.TicketForm(request.POST)
         if form.is_valid():
             ticket_obj = Ticket.objects.create()
             cd = form.cleaned_data
@@ -97,13 +97,13 @@ def ticket(request):
             ticket_obj.save()
             return redirect("blog:home")
     else:
-        form = TicketForm()
+        form = forms.TicketForm()
     return render(request, "forms/ticket.html", {'form': form})
 
 
 def create_post(request):
     if request.method == 'POST':
-        form = PostForm(data=request.POST, files=request.FILES)
+        form = forms.PostForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             post_form = form.save(commit=False)
             post_form.auther = request.user
@@ -119,7 +119,7 @@ def create_post(request):
             return redirect("blog:profile")
 
     else:
-        form = PostForm()
+        form = forms.PostForm()
     context = {
         "form": form
     }
@@ -129,6 +129,7 @@ def create_post(request):
 
 def delete_post(request, pk):
     post = get_object_or_404(Post, id=pk)
+
     if request.method == "POST":
         post.delete()
         return redirect("blog:profile")
@@ -141,7 +142,7 @@ def delete_post(request, pk):
 def edit_post(request, pk):
     post = get_object_or_404(Post, id=pk)
     if request.method == "POST":
-        form = PostForm(request.POST, request.FILES, instance=post)
+        form = forms.PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             form.save()
             if form.cleaned_data['image_1']:
@@ -162,7 +163,7 @@ def edit_post(request, pk):
                     image.save()
         return redirect('blog:profile')
     else:
-        form = PostForm(instance=post)
+        form = forms.PostForm(instance=post)
     context = {
         'post': post,
         'form': form
@@ -181,7 +182,7 @@ def post_search(request):
     query = None
     results = []
     if 'query' in request.GET:
-        form = SearchForm(request.GET)
+        form = forms.SearchForm(request.GET)
         if form.is_valid():
             query = form.cleaned_data['query']
             # search with search query and search vector and search rank
@@ -217,3 +218,23 @@ def profile(request):
         "posts": posts
     }
     return render(request, 'blog/profile.html', context)
+
+
+def user_login(request):
+    if request.method == "POST":
+        form = forms.LoginForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            user = authenticate(request, username=cd['username'], password=cd['password'])
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return redirect('home')
+                else:
+                    return HttpResponse('user is not active')
+            else:
+                return HttpResponse('user not found')
+
+    else:
+        form = forms.LoginForm()
+    return render(request, 'forms/login.html', {'form': form})

@@ -39,8 +39,8 @@ class CommentForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
-    image_1 = forms.ImageField(label="تصویر اول",required=False)
-    image_2 = forms.ImageField(label="تصویر دوم",required=False)
+    image_1 = forms.ImageField(label="تصویر اول", required=False)
+    image_2 = forms.ImageField(label="تصویر دوم", required=False)
 
     class Meta:
         model = Post
@@ -72,3 +72,8 @@ class PostForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     query = forms.CharField()
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=250, label='نام کاربری:')
+    password = forms.CharField(max_length=250, label='کلمه عبور:', widget=forms.PasswordInput)

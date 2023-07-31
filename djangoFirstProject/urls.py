@@ -17,12 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from djangoFirstProject import settings
-from blog.views import index_page
+from blog.views import index_page, user_login
 
 urlpatterns = [
+    path("", index_page, name="home"),
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls', namespace='blog')),
-    path("", index_page, name="home"),
+    path('login/', user_login, name='login')
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
