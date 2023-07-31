@@ -20,7 +20,7 @@ def index_page(request):
         'min_time': aggregate_post['reading_time__min'],
         'avg_time': aggregate_post['reading_time__avg'],
     }
-    return render(request, 'blog/index.html', context)
+    return render(request, 'index.html', context)
 
 
 # func base view
@@ -140,7 +140,6 @@ def delete_post(request, pk):
 
 def edit_post(request, pk):
     post = get_object_or_404(Post, id=pk)
-    images = post.images.all()
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
@@ -154,6 +153,7 @@ def edit_post(request, pk):
                                      image_file=form.cleaned_data['image_2'], post=post)
                 request.FILES.pop('image_2')
 
+            # for edit Images
             for key, file in request.FILES.items():
                 image_id = key.split('_')[1]
                 if file:
@@ -165,7 +165,6 @@ def edit_post(request, pk):
         form = PostForm(instance=post)
     context = {
         'post': post,
-        'images': images,
         'form': form
     }
     return render(request, "forms/post.html", context)

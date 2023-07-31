@@ -128,14 +128,10 @@ class Image(models.Model):
         return self.title if self.title else image_name
 
     def delete(self, *args, **kwargs):
-        # if image haven't exist
-        try:
-            image = self.image_file
-            storage, path = image.storage, image.path
-            storage.delete(path)
-            super().delete(*args, **kwargs)
-        except:
-            super().delete(*args, **kwargs)
+        image = self.image_file
+        storage, path = image.storage, image.path
+        storage.delete(path)
+        super().delete(*args, **kwargs)
 
 
 # method 1 for delete image from media root

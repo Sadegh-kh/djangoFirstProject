@@ -11,7 +11,7 @@
             {% for field in form %}
                 {% if field.name == 'image_1' %}
                     {# if images post exist showing them below  #}
-                    {% for image in images %}
+                    {% for image in post.images.all %}
                         <a href="{{ image.image_file.url }}">{{ image.image_file.name }}</a>
                         <br>
                         تغییر:
