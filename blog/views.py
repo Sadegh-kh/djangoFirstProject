@@ -8,7 +8,8 @@ from django.views.decorators.http import require_POST
 from django.db.models import Avg, Max, Min
 from django.db.models import Q
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity, SearchHeadline
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -65,7 +66,7 @@ def post_item(request, pk):
 #     template_name = "blog/post_detail.html"
 #     model = Post
 
-
+@login_required
 @require_POST
 def post_comment(request, pk):
     post = get_object_or_404(Post, id=pk, status=Post.Status.PUBLISH)
@@ -101,6 +102,7 @@ def ticket(request):
     return render(request, "forms/ticket.html", {'form': form})
 
 
+@login_required
 def create_post(request):
     if request.method == 'POST':
         form = forms.PostForm(data=request.POST, files=request.FILES)
@@ -211,6 +213,7 @@ def post_search(request):
     return render(request, 'blog/search.html', context)
 
 
+@login_required
 def profile(request):
     user = request.user
     posts = Post.published.filter(auther=user)
@@ -220,21 +223,26 @@ def profile(request):
     return render(request, 'blog/profile.html', context)
 
 
-def user_login(request):
-    if request.method == "POST":
-        form = forms.LoginForm(request.POST)
-        if form.is_valid():
-            cd = form.cleaned_data
-            user = authenticate(request, username=cd['username'], password=cd['password'])
-            if user is not None:
-                if user.is_active:
-                    login(request, user)
-                    return redirect('home')
-                else:
-                    return HttpResponse('user is not active')
-            else:
-                return HttpResponse('user not found')
+# manual login user (fbv)
+# def user_login(request):
+#     if request.method == "POST":
+#         form = forms.LoginForm(request.POST)
+#         if form.is_valid():
+#             cd = form.cleaned_data
+#             user = authenticate(request, username=cd['username'], password=cd['password'])
+#             if user is not None:
+#                 if user.is_active:
+#                     login(request, user)
+#                     return redirect('home')
+#                 else:
+#                     return HttpResponse('user is not active')
+#             else:
+#                 return HttpResponse('user not found')
+#
+#     else:
+#         form = forms.LoginForm()
+#     return render(request, 'forms/../templates/registration/login.html', {'form': form})
 
-    else:
-        form = forms.LoginForm()
-    return render(request, 'forms/login.html', {'form': form})
+def logout_view(request):
+    logout(request)
+    return redirect(request.META.get('HTTP_REFERER'))

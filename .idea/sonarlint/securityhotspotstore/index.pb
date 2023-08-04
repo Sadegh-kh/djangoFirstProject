@@ -13,5 +13,3 @@ N
 blog/templates/forms/post.html,2\0\20927cf3d245273a4b56919ae8a203e1c191d84e
 H
 blog/static/css/base.css,f\9\f9f83ab4bb92b3ea2d618904e43bb39deea6762e
-N
-djangoFirstProject/settings.py,7\2\7221dad26121e067bdb49691883ed7b253a368be
