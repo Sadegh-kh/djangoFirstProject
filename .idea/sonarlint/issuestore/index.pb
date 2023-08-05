@@ -3,7 +3,21 @@
 blog/tests.py,a\d\ad2fa097158bb799ebb227eaa60d28b415e3f7c6
 =
 blog/admin.py,9\f\9f9560753a3e5c777e2281279748008e37d22c37
-H
-blog/static/css/base.css,f\9\f9f83ab4bb92b3ea2d618904e43bb39deea6762e
 N
 blog/templates/forms/post.html,2\0\20927cf3d245273a4b56919ae8a203e1c191d84e
+D
+templates/index.html,f\6\f69b8ce2e31684ae06f1b3e84821e07e3dfddb2f
+O
+blog/templates/parent/base.html,7\e\7e8a1e516172a67d719e3c69dff72eb66c25e78a
+<
+blog/urls.py,f\6\f6b33af54aee9a28118c42532a95bf2744e8df7d
+=
+blog/forms.py,8\d\8dc45ed33dbcc8b65458ba016179df9d26f67b91
+Q
+!templates/registration/login.html,7\b\7bddf72c7b5006bedb31206aeb760a16166f7b95
+N
+djangoFirstProject/settings.py,7\2\7221dad26121e067bdb49691883ed7b253a368be
+=
+blog/views.py,e\7\e7a8c955252fc1494be19edcdaa6f927cd79a1a7
+H
+blog/static/css/base.css,f\9\f9f83ab4bb92b3ea2d618904e43bb39deea6762e

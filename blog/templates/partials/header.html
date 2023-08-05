@@ -4,7 +4,7 @@
 </form>
 <div style="display: block;width: 100%">
 
-	<span style="float: left; direction: rtl">
+	<span style="float: left; direction: rtl;">
 
     {% if request.user.is_authenticated %}
         <p><a href="{% url 'blog:profile' %}">{{ request.user.username }}</a></p>

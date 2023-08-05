@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from djangoFirstProject import settings
-from blog.views import index_page,logout_view
+from blog.views import index_page, logout_view
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -28,6 +28,8 @@ urlpatterns = [
     path('accounts/login', auth_views.LoginView.as_view(), name='login'),
     # path('accounts/logout', auth_views.LogoutView.as_view(), name='logout'),
     path('accounts/logout', logout_view, name='logout'),
+    path('accounts/password_change/done', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
+    path('accounts/password_change', auth_views.PasswordChangeView.as_view(), name='password_change'),
 
 ]
 
