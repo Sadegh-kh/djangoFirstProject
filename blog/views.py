@@ -8,7 +8,6 @@ from django.views.decorators.http import require_POST
 from django.db.models import Avg, Max, Min
 from django.db.models import Q
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity, SearchHeadline
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
 
@@ -222,27 +221,3 @@ def profile(request):
     }
     return render(request, 'blog/profile.html', context)
 
-
-# manual login user (fbv)
-# def user_login(request):
-#     if request.method == "POST":
-#         form = forms.LoginForm(request.POST)
-#         if form.is_valid():
-#             cd = form.cleaned_data
-#             user = authenticate(request, username=cd['username'], password=cd['password'])
-#             if user is not None:
-#                 if user.is_active:
-#                     login(request, user)
-#                     return redirect('home')
-#                 else:
-#                     return HttpResponse('user is not active')
-#             else:
-#                 return HttpResponse('user not found')
-#
-#     else:
-#         form = forms.LoginForm()
-#     return render(request, 'forms/../templates/registration/login.html', {'form': form})
-
-def logout_view(request):
-    logout(request)
-    return redirect(request.META.get('HTTP_REFERER'))

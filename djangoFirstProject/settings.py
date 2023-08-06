@@ -30,6 +30,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "blog.apps.BlogConfig",
+    'account.apps.AccountConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -144,5 +145,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = False
 
 LOGIN_REDIRECT_URL = 'blog:profile'
-LOGIN_URL = 'login'
+LOGIN_URL = 'account:login'
 # LOGOUT_REDIRECT_URL='home'
