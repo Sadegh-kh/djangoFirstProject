@@ -15,7 +15,19 @@ O
 blog/templates/parent/base.html,7\e\7e8a1e516172a67d719e3c69dff72eb66c25e78a
 =
 blog/forms.py,8\d\8dc45ed33dbcc8b65458ba016179df9d26f67b91
-Q
-!templates/registration/login.html,7\b\7bddf72c7b5006bedb31206aeb760a16166f7b95
 H
 blog/static/css/base.css,f\9\f9f83ab4bb92b3ea2d618904e43bb39deea6762e
+`
+0templates/registration/password_change_form.html,7\b\7b9afdc10fea18098dc5c88eda2ab9d2e27f17e3
+`
+0templates/registration/password_change_done.html,a\9\a9e85d0aa1fcaad72d2c93f0403695db21dd6fe7
+<
+blog/urls.py,f\6\f6b33af54aee9a28118c42532a95bf2744e8df7d
+J
+djangoFirstProject/urls.py,4\f\4f50ef23334c55b10e30ce8260438489c79a5f0d
+D
+templates/index.html,f\6\f69b8ce2e31684ae06f1b3e84821e07e3dfddb2f
+P
+ blog/templates/blog/profile.html,5\c\5cdf6750af77ae1aede1321e30e96803137a712a
+S
+#blog/templates/partials/header.html,e\b\eb7dec8aefc1a25873bd7c6f59030202e93a752a

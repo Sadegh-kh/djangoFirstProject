@@ -20,7 +20,7 @@ from django.contrib.auth import authenticate, login, logout
 #
 #     else:
 #         form = forms.LoginForm()
-#     return render(request, 'forms/../templates/registration/login.html', {'form': form})
+#     return render(request, 'registration/login.html', {'form': form})
 
 def logout_view(request):
     logout(request)

@@ -147,3 +147,5 @@ DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = False
 LOGIN_REDIRECT_URL = 'blog:profile'
 LOGIN_URL = 'account:login'
 # LOGOUT_REDIRECT_URL='home'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
