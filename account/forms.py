@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from . import models
 
 
 class UserRegisterForm(forms.ModelForm):
@@ -15,3 +16,15 @@ class UserRegisterForm(forms.ModelForm):
         if cd['password'] != cd['password_confirm']:
             raise forms.ValidationError("پسورد مطابقت ندارد")
         return cd['password_confirm']
+
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email']
+
+
+class AccountEditForm(forms.ModelForm):
+    class Meta:
+        model = models.Account
+        fields = ['bio', 'job', 'date_of_birth','photo']

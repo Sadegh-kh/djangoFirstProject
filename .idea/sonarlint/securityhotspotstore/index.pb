@@ -35,9 +35,9 @@ b
 2templates/registration/password_reset_confirm.html,d\2\d287029ab73e1d0ec9c10b8db97928f12e3acec8
 c
 3templates/registration/password_reset_complete.html,0\3\03375d9393c3cd821005d2baac6b47524d6c9fc5
-P
- blog/templates/blog/profile.html,5\c\5cdf6750af77ae1aede1321e30e96803137a712a
 `
 0templates/registration/password_reset_email.html,7\0\701ca482fff2daba013b7bf78819608efc1fb3ff
-N
-djangoFirstProject/settings.py,7\2\7221dad26121e067bdb49691883ed7b253a368be
+=
+blog/forms.py,8\d\8dc45ed33dbcc8b65458ba016179df9d26f67b91
+S
+#blog/templates/partials/header.html,e\b\eb7dec8aefc1a25873bd7c6f59030202e93a752a

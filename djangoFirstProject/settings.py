@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_cleanup.apps.CleanupConfig',
     "blog.apps.BlogConfig",
     'account.apps.AccountConfig',
     'django.contrib.admin',
