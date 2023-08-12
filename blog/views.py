@@ -24,29 +24,36 @@ def index_page(request):
 
 
 # func base view
-# def post_list(request):
-#     posts = Post.published.all()
-#     paginator = Paginator(posts, 2)
-#     page_number = request.GET.get('page', 1)
-#     try:
-#         posts = paginator.page(page_number)
-#     # for example we have 4 object , user enter 5 and Paginator rise EmptyPage
-#     except EmptyPage:
-#         posts = paginator.page(paginator.num_pages)
-#     except PageNotAnInteger:
-#         posts = paginator.page(1)
-#     context = {
-#         "list_of_post": posts
-#     }
-#     return render(request, "blog/post_list.html", context)
+def post_list(request, category=None):
+    if category is not None:
+        posts = Post.published.filter(category=category)
+    else:
+        posts = Post.published.all()
+    categories = [i[0] for i in Post.CATEGORY_CHOICES]
+    paginator = Paginator(posts, 2)
+    page_number = request.GET.get('page', 1)
+    try:
+        posts = paginator.page(page_number)
+    # for example we have 4 object , user enter 5 and Paginator rise EmptyPage
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    context = {
+        "list_of_post": posts,
+        'category': category,
+        'categories': categories
+    }
+    return render(request, "blog/post_list.html", context)
+
 
 # class base view
-class PostList(ListView):
-    queryset = Post.published.all()
-    # default is object_list
-    context_object_name = "list_of_post"
-    paginate_by = 2
-    template_name = "blog/post_list.html"
+# class PostList(ListView):
+#     queryset = Post.published.all()
+#     # default is object_list
+#     context_object_name = "list_of_post"
+#     paginate_by = 2
+#     template_name = "blog/post_list.html"
 
 
 def post_item(request, pk):
@@ -220,4 +227,3 @@ def profile(request):
         "posts": posts
     }
     return render(request, 'blog/profile.html', context)
-

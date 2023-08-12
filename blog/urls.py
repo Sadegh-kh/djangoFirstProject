@@ -3,8 +3,9 @@ from . import views
 
 app_name = "blog"
 urlpatterns = [
-    path('posts/', views.PostList.as_view(), name="post_list"),
-    path('posts/<pk>', views.post_item, name="post_item"),
+    path('posts/', views.post_list, name="post_list"),
+    path('posts/<str:category>', views.post_list, name="post_list_category"),
+    path('posts/detail/<pk>', views.post_item, name="post_item"),
     path('posts/<pk>/comment', views.post_comment, name="post_comment"),
     path("ticket/", views.ticket, name="ticket"),
     path("posts/new_post/create", views.create_post, name="create_post"),

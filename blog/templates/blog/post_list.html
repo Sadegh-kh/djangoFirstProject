@@ -4,9 +4,20 @@
 {% endblock %}
 
 {% block content %}
+    {% if category %}
+        <h1 class="post-list">{{ category }}</h1>
+    {% else %}
+        <h1 class="post-list">لیست پست ها</h1>
+    {% endif %}
+    <ul>
+    <h3>دسته بندی</h3>
+        {% for category in categories %}
+            <li>
+                <p><a href="{% url 'blog:post_list_category' category %}">{{ category }}</a></p>
+            </li>
+        {% endfor %}
 
-    <h1 class="post-list">post list</h1>
-
+    </ul>
     <ol style="--length: {{ list_of_post|length }}" role="list">
         {% for post in list_of_post %}
             <li style="--i: {{ forloop.counter }}">
@@ -22,5 +33,5 @@
         {% endfor %}
     </ol>
 
-    {% include "partials/pagination.html" with page=page_obj %}
+    {% include "partials/pagination.html" with page=list_of_post %}
 {% endblock %}

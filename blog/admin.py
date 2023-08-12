@@ -24,11 +24,11 @@ class CommentInline(admin.StackedInline):
 # Register your models here.
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ["title", "auther", "publish", "status"]
+    list_display = ["title", "auther", "publish", 'category', "status"]
     list_display_links = ['auther', 'title']
     list_filter = [("publish", JDateFieldListFilter), 'status', 'auther']
-    search_fields = ['title', 'description', 'auther']
-    list_editable = ['status']
+    search_fields = ['title', 'description','category']
+    list_editable = ['status','category']
     prepopulated_fields = {'slug': ['auther', 'title']}
     raw_id_fields = ('auther',)
     date_hierarchy = 'publish'
