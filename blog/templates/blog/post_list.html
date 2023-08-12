@@ -10,7 +10,7 @@
         <h1 class="post-list">لیست پست ها</h1>
     {% endif %}
     <ul>
-    <h3>دسته بندی</h3>
+        <h3>دسته بندی</h3>
         {% for category in categories %}
             <li>
                 <p><a href="{% url 'blog:post_list_category' category %}">{{ category }}</a></p>
@@ -24,6 +24,9 @@
                 <h3 class="post-title">
                     <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
                 </h3>
+                <h5>
+                    نویسنده : <a href="{% url 'account:auther_detail' post.auther %}">{{ post.auther }}</a>
+                </h5>
                 <p class="descr"> {{ post.description | truncatewords:4 }}</p>
                 {% if post.images.first.image_file %}
                     <img src="{{ post.images.first.image_file.url }}" alt="{{ post.images.first.title }}">

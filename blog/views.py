@@ -219,11 +219,4 @@ def post_search(request):
     return render(request, 'blog/search.html', context)
 
 
-@login_required
-def profile(request):
-    user = request.user
-    posts = Post.published.filter(auther=user)
-    context = {
-        "posts": posts
-    }
-    return render(request, 'blog/profile.html', context)
+

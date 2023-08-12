@@ -22,6 +22,8 @@ urlpatterns = [
          auth_views.PasswordResetConfirmView.as_view(success_url=reverse_lazy('account:password_reset_complete')),
          name='password_reset_confirm'),
     path('password_reset/complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path("profile/", views.profile, name="profile"),
     path('profile/edit',views.edit_account,name="edit_account"),
+    path('auther/<str:author>',views.author_detail, name="auther_detail"),
 
 ]

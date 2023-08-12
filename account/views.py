@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from . import forms
 from . import models
 from django.contrib.auth.decorators import login_required
+from blog.models import Post
 
 
 # manual login user (fbv)
@@ -69,3 +70,25 @@ def edit_account(request):
     }
 
     return render(request, 'account/forms/edit_account.html', context)
+
+
+@login_required
+def profile(request):
+    user = request.user
+    posts = Post.published.filter(auther=user)
+    context = {
+        "posts": posts
+    }
+    return render(request, 'account/profile.html', context)
+
+
+def author_detail(request, author):
+    user = User.objects.get(username=author)
+    account = models.Account.objects.get(user=user)
+    posts = Post.published.filter(auther=user)
+    context = {
+        'user': user,
+        'account': account,
+        'posts': posts
+    }
+    return render(request, 'account/author.html', context)

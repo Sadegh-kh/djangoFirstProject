@@ -1,0 +1,44 @@
+{% extends 'parent/base.html' %}
+{% block title %}
+    Auther
+{% endblock %}
+
+{% block content %}
+    <h3>{{ user.username }}</h3>
+    <div style="display: flex">
+
+        {% if account.photo %}
+            <img class="profile_img" src="{{ account.photo.url }}" alt="{{ user.username }}">
+        {% endif %}
+        <div class="bio">
+            {% if user.first_name and user.last_name %}
+                <p> نام و نام خانوادگی : {{ user.first_name }} {{ user.last_name }}</p>
+            {% endif %}
+
+            {% if account.bio %}
+                <p>توضیحات : {{ account.bio }}</p>
+            {% endif %}
+
+            {% if account.job %}
+                <p>شغل : {{ account.job }}</p>
+            {% endif %}
+
+            <p>تعداد پست ها:{{ posts.count }}</p>
+        </div>
+
+
+    </div>
+
+    <div>
+        <h3>پست ها</h3>
+        <ol>
+            {% for post in posts %}
+                <li>
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+                </li>
+            {% endfor %}
+        </ol>
+
+
+    </div>
+{% endblock %}
