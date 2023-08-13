@@ -34,7 +34,7 @@ def post_list(request, category=None):
     page_number = request.GET.get('page', 1)
     try:
         posts = paginator.page(page_number)
-    # for example we have 4 object , user enter 5 and Paginator rise EmptyPage
+    # for example, we have 4 object , user enter 5 and Paginator rise EmptyPage
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)
     except PageNotAnInteger:

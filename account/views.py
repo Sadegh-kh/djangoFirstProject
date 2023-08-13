@@ -5,6 +5,7 @@ from . import forms
 from . import models
 from django.contrib.auth.decorators import login_required
 from blog.models import Post
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 # manual login user (fbv)
@@ -74,8 +75,15 @@ def edit_account(request):
 
 @login_required
 def profile(request):
-    user = request.user
-    posts = Post.published.filter(auther=user)
+    posts = Post.published.filter(auther=request.user)
+    paginator = Paginator(posts, 4)
+    page = request.GET.get('page', 1)
+    try:
+        posts = paginator.page(page)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
     context = {
         "posts": posts
     }

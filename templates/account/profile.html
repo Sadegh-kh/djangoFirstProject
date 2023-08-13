@@ -29,6 +29,6 @@
             </tr>
 
         {% endfor %}
-
     </table>
+    {% include 'partials/pagination.html' with page=posts %}
 {% endblock %}
