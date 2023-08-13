@@ -1,0 +1,6 @@
+{% for comment in comments %}
+    <h4>{{ comment.name }}</h4>
+    <p>{{ comment.body|linebreaks }}</p>
+{% empty %}
+    <p>کامنتی برای این پست ثبت نشده است</p>
+{% endfor %}

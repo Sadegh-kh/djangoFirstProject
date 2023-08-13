@@ -64,3 +64,12 @@ def get_url_description_images(images: list, start_with, end_with):
         'url_description_images': zip(urls, description)
     }
     return context
+
+
+@register.inclusion_tag('partials/comments.html', name='post_comments')
+def get_comments(post):
+    comments = Comment.objects.filter(post=post, active=True)
+    context = {
+        'comments': comments
+    }
+    return context

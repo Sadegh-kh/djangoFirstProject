@@ -29,12 +29,8 @@
         <p>{{ comment_count }} comment{{ comment_count|pluralize }}</p>
     {% endwith %}
 
-    {% for comment in comments %}
-        <h4>{{ comment.name }}:</h4>
-        <p>{{ comment.body|linebreaks }}</p>
-    {% empty %}
-        <p>کامنتی برای این پست ثبت نشده است</p>
-    {% endfor %}
+    {% post_comments post %}
+
     {% include 'forms/comment.html' %}
 
 {% endblock %}
