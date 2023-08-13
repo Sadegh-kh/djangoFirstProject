@@ -24,6 +24,7 @@ urlpatterns = [
     path('password_reset/complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
     path("profile/", views.profile, name="profile"),
     path('profile/edit',views.edit_account,name="edit_account"),
+    path('profile/<int:pk>/comments',views.profile_comments,name="profile_comments"),
     path('auther/<str:author>',views.author_detail, name="auther_detail"),
 
 ]

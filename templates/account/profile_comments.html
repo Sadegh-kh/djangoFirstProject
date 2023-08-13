@@ -1,0 +1,10 @@
+{% extends 'parent/base.html' %}
+{% load blog_tags %}
+{% block title %}
+    Comments
+{% endblock %}
+
+{% block content %}
+    <h1>{{ post.title }}</h1>
+    {% post_comments post %}
+{% endblock %}

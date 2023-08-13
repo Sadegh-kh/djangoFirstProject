@@ -13,6 +13,7 @@
         <tr>
             <th>ردیف</th>
             <th>پست</th>
+            <th>کامنت</th>
             <th>ویرایش</th>
             <th>حذف</th>
         </tr>
@@ -20,6 +21,7 @@
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></td>
+                <td><a href="{% url 'account:profile_comments' post.id %}">کامنت</a></td>
                 <td><a href="{% url 'blog:edit_post' post.id %}">ویرایش</a></td>
                 <td><a href="{% url "blog:delete_post" post.id %}">حذف</a></td>
             </tr>

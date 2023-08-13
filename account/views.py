@@ -90,6 +90,14 @@ def profile(request):
     return render(request, 'account/profile.html', context)
 
 
+def profile_comments(request, pk):
+    post = get_object_or_404(Post, id=pk)
+    context = {
+        'post': post
+    }
+    return render(request, 'account/profile_comments.html', context)
+
+
 def author_detail(request, author):
     user = User.objects.get(username=author)
     account = models.Account.objects.get(user=user)
