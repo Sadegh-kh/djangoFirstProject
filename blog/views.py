@@ -9,16 +9,19 @@ from django.db.models import Avg, Max, Min
 from django.db.models import Q
 from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity, SearchHeadline
 from django.contrib.auth.decorators import login_required
+import random
 
 
 # Create your views here.
 
 def index_page(request):
     aggregate_post = Post.published.aggregate(Avg("reading_time"), Max("reading_time"), Min("reading_time"))
+    random_post = random.choice(Post.published.all())
     context = {
         'max_time': aggregate_post['reading_time__max'],
         'min_time': aggregate_post['reading_time__min'],
         'avg_time': aggregate_post['reading_time__avg'],
+        'random_post': random_post
     }
     return render(request, 'index.html', context)
 
@@ -217,6 +220,3 @@ def post_search(request):
         'results': results
     }
     return render(request, 'blog/search.html', context)
-
-
-

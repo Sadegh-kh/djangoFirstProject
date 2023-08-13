@@ -11,10 +11,6 @@ O
 0templates/registration/password_change_form.html,7\b\7b9afdc10fea18098dc5c88eda2ab9d2e27f17e3
 `
 0templates/registration/password_change_done.html,a\9\a9e85d0aa1fcaad72d2c93f0403695db21dd6fe7
-J
-djangoFirstProject/urls.py,4\f\4f50ef23334c55b10e30ce8260438489c79a5f0d
-D
-templates/index.html,f\6\f69b8ce2e31684ae06f1b3e84821e07e3dfddb2f
 _
 /templates/registration/password_reset_form.html,8\e\8e863567130755aba2d2f40e24e859b5aa60520f
 _
